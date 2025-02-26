@@ -10,6 +10,7 @@ class Aluno extends CI_Controller
         $this->load->model('Notas_model');
         $this->load->helper('url'); // para usar base_url()
         $this->load->library('session'); // para usar flashdata
+        $this->load->model('Disciplina_model');
     }
 
     // Método para listar alunos e suas notas
@@ -17,6 +18,9 @@ class Aluno extends CI_Controller
     {
         // Busca todos os alunos
         $alunos = $this->Aluno_model->getAlunos();
+
+        // Busca todas as disciplinas para exibir no modal de lançamento de notas
+        $disciplinas = $this->Disciplina_model->getDisciplinas();
 
         // Para cada aluno, busca as notas e organiza em um array associativo
         $notas_por_aluno = array();
@@ -26,9 +30,10 @@ class Aluno extends CI_Controller
 
         // Prepara os dados para a view
         $data = [
-            'title'          => 'Lista de Alunos',
-            'alunos'         => $alunos,
-            'notas_por_aluno' => $notas_por_aluno
+            'title'           => 'Lista de Alunos',
+            'alunos'          => $alunos,
+            'notas_por_aluno' => $notas_por_aluno,
+            'disciplinas'     => $disciplinas  // Inclua as disciplinas
         ];
 
         // Carrega a view "pages/home" dentro do layout principal

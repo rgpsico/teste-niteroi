@@ -1,3 +1,4 @@
+<!-- application/views/pages/home.php -->
 <h2 class="mt-3">Lista de Alunos</h2>
 
 <!-- Botão para adicionar aluno -->
@@ -36,13 +37,12 @@
     </div>
 </div>
 
-<!-- Exibe mensagem de erro (se houver) -->
+<!-- Exibe mensagens de erro ou sucesso -->
 <?php if ($this->session->flashdata('error')): ?>
     <div class="alert alert-danger">
         <?php echo $this->session->flashdata('error'); ?>
     </div>
 <?php endif; ?>
-
 <?php if ($this->session->flashdata('success')): ?>
     <div class="alert alert-success">
         <?php echo $this->session->flashdata('success'); ?>
@@ -75,6 +75,10 @@
                         <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#boletimModal-<?php echo $aluno->id; ?>">
                             Boletim
                         </button>
+                        <!-- Botão Lançar Notas -->
+                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#lancarNotasModal-<?php echo $aluno->id; ?>">
+                            Lançar Notas
+                        </button>
                         <!-- Botão Excluir -->
                         <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal-<?php echo $aluno->id; ?>">
                             Excluir
@@ -85,8 +89,9 @@
         </tbody>
     </table>
 
-    <!-- Modais para cada aluno (Editar, Boletim e Excluir) -->
+    <!-- Modais para cada aluno -->
     <?php foreach ($alunos as $aluno): ?>
+
         <!-- Modal Editar -->
         <div class="modal fade" id="editModal-<?php echo $aluno->id; ?>" tabindex="-1" role="dialog" aria-labelledby="editModalLabel-<?php echo $aluno->id; ?>" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -129,10 +134,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <?php
-                        // Verifica se há notas para o aluno
-                        if (isset($notas_por_aluno[$aluno->id]) && !empty($notas_por_aluno[$aluno->id])):
-                        ?>
+                        <?php if (isset($notas_por_aluno[$aluno->id]) && !empty($notas_por_aluno[$aluno->id])): ?>
                             <table class="table table-sm table-bordered">
                                 <thead>
                                     <tr>
@@ -164,6 +166,58 @@
             </div>
         </div>
 
+        <!-- Modal Lançar Notas -->
+        <!-- Modal Lançar Notas para cada aluno -->
+        <div class="modal fade" id="lancarNotasModal-<?php echo $aluno->id; ?>" tabindex="-1" role="dialog" aria-labelledby="lancarNotasModalLabel-<?php echo $aluno->id; ?>" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <?php
+                    // Cria um array associativo com chave = disciplina_id e valor = nota para o aluno atual
+                    $notas_aluno = array();
+                    if (isset($notas_por_aluno[$aluno->id]) && !empty($notas_por_aluno[$aluno->id])) {
+                        foreach ($notas_por_aluno[$aluno->id] as $nota) {
+                            $notas_aluno[$nota->disciplina_id] = $nota->nota;
+                        }
+                    }
+                    ?>
+                    <form action="<?php echo base_url('admin/salvar_notas/' . $aluno->id); ?>" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="lancarNotasModalLabel-<?php echo $aluno->id; ?>">Lançar Notas para <?php echo $aluno->nome; ?></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Tabela listando as disciplinas e campos para as notas -->
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Disciplina</th>
+                                        <th>Nota</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($disciplinas as $disciplina): ?>
+                                        <tr>
+                                            <td><?php echo $disciplina->nome; ?></td>
+                                            <td>
+                                                <input type="hidden" name="disciplina[]" value="<?php echo $disciplina->id; ?>">
+                                                <input type="text" name="nota[]" class="form-control" placeholder="Digite a nota" value="<?php echo isset($notas_aluno[$disciplina->id]) ? $notas_aluno[$disciplina->id] : ''; ?>">
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Salvar Notas</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <!-- Modal Excluir -->
         <div class="modal fade" id="deleteModal-<?php echo $aluno->id; ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-<?php echo $aluno->id; ?>" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -184,6 +238,7 @@
                 </div>
             </div>
         </div>
+
     <?php endforeach; ?>
 
 <?php else : ?>

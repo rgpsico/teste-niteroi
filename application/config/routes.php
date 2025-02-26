@@ -57,14 +57,22 @@ $route['minha-primeira-rota'] = 'Home/index';
 $route['boletim/gerar_pdf'] = 'Boletim/gerar_pdf';
 
 
-// $route['teste'] = 'TesteDB/index';
-// $route['teste/inserir'] = 'TesteDB/inserir';
-// $route['teste/listar'] = 'TesteDB/listar';
-// $route['teste/inserir_query'] = 'TesteDB/inserir_query_simples';
-// $route['teste/listar_query'] = 'TesteDB/listar_query_simples';
+$route['admin/disciplinas'] = 'admin/disciplinas';
+$route['admin/adicionar_disciplina'] = 'admin/adicionar_disciplina';
+$route['admin/atualizar_disciplina/(:num)'] = 'admin/atualizar_disciplina/$1';
+$route['admin/excluir_disciplina/(:num)'] = 'admin/excluir_disciplina/$1';
+
 
 
 $route['aluno'] = 'Aluno/index';
 $route['aluno/adicionar'] = 'Aluno/adicionar';
 $route['aluno/atualizar/(:num)'] = 'Aluno/atualizar/$1';
 $route['aluno/excluir/(:num)'] = 'Aluno/excluir/$1';
+
+$route['admin/lancar_notas/(:num)'] = 'admin/lancar_notas/$1';
+$route['admin/salvar_notas/(:num)'] = 'admin/salvar_notas/$1';
+
+
+$route['admin/config'] = 'admin/config';
+$route['admin/inserir_dados_fake'] = 'admin/inserir_dados_fake';
+$route['admin/reiniciar_dados'] = 'admin/reiniciar_dados';

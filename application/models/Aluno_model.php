@@ -55,8 +55,16 @@ class Aluno_model extends CI_Model
     // Insere um novo aluno
     public function adicionar($data)
     {
+        // Verifica se a matrícula já existe
+        $this->db->where('matricula', $data['matricula']);
+        $query = $this->db->get('alunos');
+        if ($query->num_rows() > 0) {
+            // Registro já existe, retorna false ou atualize se preferir
+            return false;
+        }
         return $this->db->insert('alunos', $data);
     }
+
 
     // Atualiza os dados de um aluno
     public function atualizar($id, $data)

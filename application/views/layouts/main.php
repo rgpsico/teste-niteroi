@@ -13,11 +13,20 @@
 <body>
 
     <!-- Navbar com Hamburger, logo e menus -->
+
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <!-- Logo e nome da aplicação -->
         <a class="navbar-brand" href="#">
-            <img src="" width="30" height="30" class="d-inline-block align-top" alt="Logo">
-            Minha Aplicação
+            <svg width="200" height="100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Fundo -->
+                <rect width="200" height="100" fill="#004080" />
+                <!-- Texto centralizado -->
+                <text x="100" y="60" font-size="30" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif">
+                    RogerNeves
+                </text>
+            </svg>
+
         </a>
         <!-- Botão Hamburger para exibição em telas menores -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
@@ -29,25 +38,20 @@
             <ul class="navbar-nav ml-auto">
                 <!-- Link simples -->
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="<?php echo base_url(); ?>">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <!-- Outro link -->
+
+                <!-- Dropdown Serviços -->
+
+                <!-- Link para área administrativa -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Sobre</a>
+                    <a class="nav-link" href="<?php echo base_url('admin/disciplinas'); ?>">Admin</a>
                 </li>
-                <!-- Dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Serviços
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Serviço 1</a>
-                        <a class="dropdown-item" href="#">Serviço 2</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Outro Serviço</a>
-                    </div>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url('admin/config'); ?>">Config</a>
                 </li>
+
                 <!-- Link desabilitado -->
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Contato</a>
