@@ -1,7 +1,3 @@
-A seguir, um exemplo de README.md para essa aplicação:
-
----
-
 # Sistema de Gerenciamento Escolar – Gerrotech
 
 Este projeto é uma aplicação web desenvolvida em PHP utilizando o framework CodeIgniter 3. O sistema permite gerenciar alunos, lançar notas, gerar boletins em PDF e realizar operações administrativas (inclusão, atualização e exclusão de disciplinas, alunos e notas). Além disso, há uma funcionalidade para inserir dados fake, facilitando testes e demonstrações.
